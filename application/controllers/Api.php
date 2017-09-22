@@ -189,5 +189,12 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
+        public function admin_add_fav($name='Алена11', $book='Gen', $glava='1', $stih='1',$tags='Заметка',$color='#cococo'){
+        $word=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->admin_add_fav($name, $book, $glava, $stih, $tags, $color);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
    }
 ?>
