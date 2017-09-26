@@ -8,6 +8,8 @@
         '==================================',
         '/api/ - список всех функций API',
         '/api/page/№ страницы/ - выводит данные статической страницы, без аргумента номера и заголовки страницы',
+        '/api/list_news/ - выводит новости сайта',
+        '/api/list_update/ - выводит обновления сайта',
         '/api/calc/dd.mm.YYYY/ - выводит праздник и чтения, без аргументов или ошибочные аргументы - сегодняшний день',
         '/api/bible/англ.аббревиатура книги/глава/ - выдает текст главы, без аргументов - список книг, англ.аббревиатура книги, число глав, ветхий завет (testament=0) или новый завет',
         '/api/perevod/ возвращает список возможных переводов Библии',        
@@ -30,6 +32,8 @@
         '/api/card/№ карты/ выдает координаты на карте (4-угла) и привязку к Библии, без аргументов выдает данные всех карт',
         '/api/admin/ Данные идут методом POST, возвращается status=TRUE/FALSE/НЕ ПОДТВЕРЖДЕН в случае читателя/гостя/не подтвержден e-mail',
         '/api/user_id/ИмяЧитателя/ Если имя зарегистрировано - возвращает статус регистрации',        
+        '/api/user_reg/ Регистрирует пользователя - данные передаются методом POST',
+        '/api/user_upd/ Обновляются данные регистрации пользователя - данные передаются в той же последовательности как в регистрации методом POST',
         '/api/admin_add_fav/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/Номер стиха/Пометка/Цвет (#cococo)/ Проверяет наличие читателя в базе и при наличии добавляет в избранное стих',
         '/api/admin_add_note/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/Номер стиха/Заметка/ Проверяет наличие читателя в базе и при наличии добавляет Заметку',
         '/api/admin_zakladki/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/Цвет закладки (red,orange,green,blue,fuchsia)/ - Добавляет закладку соответствующего цвета',
@@ -46,10 +50,16 @@
         '/api/read_plane/ - Возвращает все планы чтения',        
         '/api/user_read_plane/Имя читателя/ - Возвращает план чтения конкретного читателя',
         '/api/read_bible_user/Имя читателя/ - Возвращает чтения в формате функции chten_load на сегодня',
-        '/api/mon_read_user/Имя читателя/ - Добавляет один день в прочитанные дни',
+        '/api/mon_read_user/Имя читателя/ - Добавляет один день |сегодняшний| в прочитанные дни',
         '/api/add_plane_user/Имя читателя/План чтения |nazvan| из read_plane/ - Добавляет план чтения/меняет план чтения у читателя',
+        '/api/listen_plane/Имя читателя/ - Возвращает пропущенные дни чтения от выбора плана чтения',
+        '/api/group_list/ - список всех библейских групп',
+        '/api/group_news/ - список новостей библейских групп',
+        '/api/lecture/ - Тексты лектория',
+        '/api/media/ID/ - Выводит медиафайл под учетной записью ID, без аргумента выводит все имеющиеся в базе данных медиазаписи',
+        '/api/media_bible/Глава или стих библии/ - Выводит медиафайл соответствующий главе или стиху библии',
         '=============================================================================================================================================================',
-        '==  регистрация(!!!) следить за планом чтения, все добавленные толкования, стреловские функции   ==',
+        '==  все добавленные толкования   = media_search =',
         '==============================================================================================================================================================',
         );
 		$this->load->model('json_page');
@@ -61,6 +71,18 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
+        public function list_news(){
+        $this->load->model('static_page');
+		$result_model=$this->static_page->l_news();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function list_update(){
+        $this->load->model('static_page');
+		$result_model=$this->static_page->l_upd();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }        
         public function calc($cadate=NULL){
         $this->load->model('calc_calendar');
 		$result_model=$this->calc_calendar->data_now($cadate);
@@ -306,6 +328,22 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
+/********************************************************************/
+        public function user_reg(){
+        $data_form=$_REQUEST;
+        $this->load->model('admin');
+		$result_model=$this->admin->reg_user($data_form);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function user_upd(){
+        $data_form=$_REQUEST;
+        $this->load->model('admin');
+		$result_model=$this->admin->reg_user_upd($data_form);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+/********************************************************************/
         public function read_plane(){
         $this->load->model('admin');
 		$result_model=$this->admin->read_p();
@@ -347,5 +385,48 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
+        public function group_list(){
+        $this->load->model('group');
+		$result_model=$this->group->gr_list();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function group_news(){
+        $this->load->model('group');
+		$result_model=$this->group->gr_news();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function group_article(){
+        $this->load->model('group');
+		$result_model=$this->group->gr_art();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function lecture(){
+        $this->load->model('lect');
+		$result_model=$this->lect->lect_art();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function lecture_up(){
+        $this->load->model('lect');
+		$result_model=$this->lect->lect_up();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }  
+        public function media($id=null){
+        $this->load->model('media');
+		$result_model=$this->media->list_rec($id);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }  
+        public function media_bible($word='Быт. 4:25'){
+        $word=urldecode($word);
+        $this->load->model('media');
+		$result_model=$this->media->media_b($word);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }  
    }
 ?>

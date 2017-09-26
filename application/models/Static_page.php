@@ -16,5 +16,17 @@
 		      }
 		return $rs_read;
 		}
+		public function l_news(){
+		$this->load->database('default');
+        $query = $this->db->query('SELECT * FROM `static_page` WHERE `page_type` = 2');
+		foreach ($query->result_array() as $row){$rs_read[]=$row;}
+		return $rs_read;
+		}		
+		public function l_upd(){
+		$this->load->database('default');
+        $query = $this->db->query('SELECT * FROM `static_page` WHERE `page_type` = 3');
+		foreach ($query->result_array() as $row){$rs_read[]=$row;}
+		return $rs_read;
+		}
    }								
 ?>

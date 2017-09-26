@@ -287,5 +287,33 @@
         foreach($dif as $vv)$rs_r[]=$vv;
 		return $rs_r;
 		}
+		public function reg_user($data_form){
+		    unset($data_form['captcha']);
+		    unset($data_form['enter']);
+		    foreach($data_form as $rt)$s_n[]=$rt;
+		    $tod=strtotime("now");
+		    $s_n[]=date('d.m.Y',$tod);
+		    $s_n[]='no';
+		    $s_n[]=date('d.m.Y',$tod);
+		$this->load->database('pass');
+        $query = $this->db->query('INSERT INTO `user`(`login`, `passw`, `email`, `country`, `sity`, `o_sebe`, `data`, `see_email`, `last_data`) VALUES (?,sha1(?),?,?,?,?,?,?,?)', $s_n);
+        if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
+		return $rs_r;
+		}
+		public function reg_user_upd($data_form){
+		    $s_n[]=$data_form['password'];
+		    $s_n[]=$data_form['email'];
+		    $s_n[]=$data_form['country'];
+		    $s_n[]=$data_form['city'];
+		    $s_n[]=$data_form['about'];
+		    $tod=strtotime("now");
+		    $s_n[]='no';
+		    $s_n[]=date('d.m.Y',$tod);
+		    $s_n[]=$data_form['login'];
+		$this->load->database('pass');
+        $query = $this->db->query('UPDATE `user` SET `passw`=?,`email`=?,`country`=?,`sity`=?,`o_sebe`=?,`see_email`=?,`last_data`=? WHERE `login` LIKE ?', $s_n);
+        if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
+		return $rs_r;
+		}
    }								
 ?>
