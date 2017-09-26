@@ -76,7 +76,10 @@ if($fl){
                         if($st1[$i]>$max) $max=$st1[$i];
                         if($st1[$i]<$min) $min=$st1[$i];
                                     }
-        $sql="SELECT * FROM $from_stih WHERE st_no BETWEEN $min AND $max";
+//
+        if(($max==0)OR($min==0))$sql="SELECT * FROM $from_stih";
+        else $sql="SELECT * FROM $from_stih WHERE st_no BETWEEN $min AND $max";
+//
         $query=$this->db->query($sql);
         foreach ($query->result_array() as $row) $rs_chten[]=$row;
         return $rs_chten;

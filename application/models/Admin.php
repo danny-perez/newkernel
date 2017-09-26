@@ -28,7 +28,7 @@
         $this->load->database('pass');
         $query = $this->db->query('SELECT login,email FROM user WHERE login LIKE ?',$name);
         if(!$query->row()){$result[]='Error users'; goto label_stop;}
-        $email = $query->row('email'); //Идентификация по login и e-mail в оригинале только login
+        $email = $query->row('login'); //Идентификация по login и e-mail в оригинале только login
         $s_n[]=$kn;
         $s_n[]=$glava;
         $s_n[]=$stih;
@@ -39,6 +39,253 @@
         if(!$query)$result[]='Error record'; else $result[]='Sucsessful';
 		label_stop:
 		return $result;
+		}
+		
+		public function admin_zakladki($name, $book, $glava, $gamma){
+        $this->load->database('default');
+        $query = $this->db->query('SELECT abreviation_rus FROM new_book WHERE abbreviation LIKE ?',$book);
+        $arus = $query->row('abreviation_rus'); //Аббревиатура книги
+        $this->db->close();
+        
+        $this->load->database('pass');
+        $query = $this->db->query('SELECT login,email FROM user WHERE login LIKE ?',$name);
+        if(!$query->row()){$result[]='Error users'; goto label_stop;}
+        $login = $query->row('login'); //Идентификация по login и e-mail в оригинале только login
+        
+        $query = $this->db->query('SELECT * FROM zakladki WHERE name LIKE ?',$login);
+        if(!$query->row())
+            {
+            /*добавить запись INSERT*/
+            $s_n[]=$gamma;
+            $s_n[]=$login;
+            $s_n[]=$arus.'. '.$glava;
+            $query = $this->db->query('INSERT INTO zakladki(name, ?) VALUES (?,?)',$s_n);
+            }
+                else
+                    {
+                        /*добавить запись Update*/
+                        $komplex=$arus.'. '.$glava;
+                        $sql="UPDATE `zakladki` SET `$gamma`='$komplex' WHERE `name` LIKE '$login'";
+                        $query = $this->db->query($sql);    
+                    }
+        if(!$query)$result[]='Error record'; else $result[]='Sucsessful';
+		label_stop:
+		return $result;
+		}
+		public function admin_note($name, $book, $glava, $stih,$tags){
+        $this->load->database('default');
+        $query = $this->db->query('SELECT kn FROM new_book WHERE abbreviation LIKE ?',$book);
+        $kn = $query->row('kn');
+        $this->db->close();
+        $this->load->database('pass');
+        $query = $this->db->query('SELECT login,email FROM user WHERE login LIKE ?',$name);
+        if(!$query->row()){$result[]='Error users'; goto label_stop;}
+        $login = $query->row('login'); //Идентификация по login и e-mail в оригинале только login
+        $s_n[]=$kn;
+        $s_n[]=$glava;
+        $s_n[]=$stih;
+        $s_n[]=$login;
+        $s_n[]=$tags;
+        
+        $query = $this->db->query('INSERT INTO `zametki`(`kn`, `gl`, `st`, `user`, `text`) VALUES (?,?,?,?,?)',$s_n);
+        if(!$query)$result[]='Error record'; else $result[]='Sucsessful';
+		label_stop:
+		return $result;
+		}
+		public function admin_tolk($name, $book, $glava, $stih,$id_tolk, $ekzeget){
+        $this->load->database('default');
+        $query = $this->db->query('SELECT kn FROM new_book WHERE abbreviation LIKE ?',$book);
+        $kn = $query->row('kn');
+        $this->db->close();
+        $this->load->database('pass');
+        $query = $this->db->query('SELECT login,email FROM user WHERE login LIKE ?',$name);
+        if(!$query->row()){$result[]='Error users'; goto label_stop;}
+        $login = $query->row('login'); //Идентификация по login и e-mail в оригинале только login
+        $s_n[]=$login;
+        $s_n[]=$kn;
+        $s_n[]=$glava;
+        $s_n[]=$stih;
+        $s_n[]=$id_tolk;
+        $s_n[]=$ekzeget;
+        
+        $query = $this->db->query('INSERT INTO `tolk_fav`(`name_user`, `kn`, `gl`, `st`, `id_tolk`, `tolk`) VALUES (?,?,?,?,?,?)',$s_n);
+        if(!$query)$result[]='Error record'; else $result[]='Sucsessful';
+		label_stop:
+		return $result;
+		}
+		public function read_n($name){
+        $this->load->database('pass');
+        $query = $this->db->query('SELECT login FROM user WHERE login LIKE ?',$name);
+        if(!$query->row()){$rs_r[]='Error users'; goto label_stop;}
+        $login = $query->row('login'); //Идентификация по login и e-mail в оригинале только login
+        $query = $this->db->query('SELECT * FROM `zametki` WHERE `user` LIKE ?',$login);
+        if(empty($query))$rs_r[]='Not_note'; else {foreach ($query->result() as $row)$rs_r[]=$row;}
+		label_stop:
+		return $rs_r;
+		}
+		public function edit_n($id, $note){
+		$this->load->database('pass');    
+    	$s_n[]=$id;
+        $s_n[]=$note;
+        $s_n[]=$id;
+        $this->load->database('pass');
+        $query = $this->db->query('UPDATE `zametki` SET `id`=?,`text`=? WHERE id=?',$s_n);
+        if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
+		return $rs_r;
+		}
+		public function delete_n($id){
+		$this->load->database('pass');    
+		$query = $this->db->query('DELETE FROM `zametki` WHERE `id`=?',$id);
+        if(!$query)$result[]='Error DELETE'; else $result[]='Sucsessful DELETE';
+        return $result;
+		}
+		public function read_f_s($name){
+        $this->load->database('pass');
+        $query = $this->db->query('SELECT * FROM `favorite` WHERE `name_user` LIKE ?',$name);
+        foreach ($query->result() as $row)$rs_r[]=$row;
+		return $rs_r;
+		}
+		public function delete_f_s($id){
+        $this->load->database('pass');
+        $query = $this->db->query('DELETE FROM `favorite` WHERE `id`=?',$id);
+        if(!$query)$result[]='Error DELETE'; else $result[]='Sucsessful DELETE';
+		return $result;
+		}
+		public function read_f_t($name){
+		$this->load->database('pass');
+        $query = $this->db->query('SELECT * FROM `tolk_fav` WHERE `name_user` LIKE ?',$name);
+        foreach ($query->result() as $row)$rs_r[]=$row;
+		return $rs_r;
+		}
+		public function delete_f_t($id){
+		$this->load->database('pass');
+        $query = $this->db->query('DELETE FROM `tolk_fav` WHERE `id`=?',$id);
+        if(!$query)$result[]='Error DELETE'; else $result[]='Sucsessful DELETE';
+		return $result;
+		}
+		public function read_z($name){
+		$this->load->database('pass');
+        $query = $this->db->query('SELECT * FROM `zakladki` WHERE `name` LIKE ?',$name);
+        foreach ($query->result() as $row)$rs_r[]=$row;
+		return $rs_r;
+		}
+		public function delete_z($name,$color){
+		   switch ($color){
+		case 'red' : $color='red'; break;
+        case 'orange' : $color='orange'; break;
+        case 'green' : $color='green'; break;
+        case 'blue' : $color='blue'; break;
+        default : $color='fuchsia'; break;
+		   }
+        $this->load->database('pass');
+        $sql="UPDATE `zakladki` SET `$color`='' WHERE `name` LIKE '$name'";
+        $query = $this->db->query($sql);
+        if($query) $res[]='Sucsessful DELETE'; else $res[]='Error DELETE';
+		return $res;
+		}
+		public function read_user_id($login){
+        $this->load->database('pass');
+        $row['status']='FALSE';
+        $query = $this->db->query('SELECT login,email FROM user WHERE login LIKE ?',$login);
+		foreach ($query->result_array() as $row){$rs_read[]=$row; $row['status']='REGISTERED';}
+		if($row['status']==='FALSE'){
+		$query = $this->db->query('SELECT login,email FROM user_vrem WHERE login LIKE ?',$login);
+		foreach ($query->result_array() as $row){$rs_read[]=$row; $row['status']='NotConfirmed';}
+		}
+		$this->db->close();
+		return $row; 
+		}
+		public function read_p(){
+		$this->load->database('default');
+        $query = $this->db->query('SELECT * FROM `plan_chteniya`');
+        foreach ($query->result() as $row)$rs_r[]=$row;
+		return $rs_r;
+		}
+		public function u_read_p($name){
+		$this->load->database('pass');
+        $query = $this->db->query('SELECT * FROM `plan` WHERE `name` LIKE ?', $name);
+        foreach ($query->result() as $row)$rs_r[]=$row;
+		return $rs_r;
+		}
+		public function r_bible_u($name){
+		$this->load->database('pass');
+        $query = $this->db->query('SELECT * FROM `plan` WHERE `name` LIKE ?', $name);
+        foreach ($query->result() as $row)$rs_r[]=$row;
+        $res_t=$rs_r[0];
+        $name_plan=$res_t->nazvan;
+        $start_plane=$res_t->nachalo;
+        $this->db->close();
+        $this->load->database('default');
+        $query = $this->db->query('SELECT plan FROM `plan_chteniya` WHERE `nazvan` LIKE ?',$name_plan);
+        $row = $query->row('plan');
+        $pl=explode(',',$row);
+        foreach($pl as $tt){
+                            $tt=trim($tt);
+                            $query = $this->db->query('SELECT * FROM `chteniya` WHERE `title` LIKE ?',$tt);
+                            $row = $query->row('plan');
+                            $rr=preg_replace('/"?,?/','',$row);
+                            $rr=trim($rr);
+                            $s=explode(' ',$rr);
+                            $mchten[]=$s;
+                            }
+        $tday=strtotime("now");
+        $doday=strtotime($start_plane);
+        $difday=date('z',$tday)-date('z',$doday); //Разница в днях
+        
+        foreach($mchten as $dd){
+        $day=$dd[$difday];
+        $sti=array(' ',' ',' ');
+        $n1=explode(':',$day); $sti[2]=$n1[0];
+        if(count($n1)>1){$sti=explode('-',$n1[1]); $sti[]=$n1[0];} else {$sti[0]=0; $sti[1]=0;}
+        $rs_f[]=$sti[2].' '.$sti[0].' '.$sti[1];
+        }
+		//print_r($rs_f);
+		return $rs_f;
+		}
+		public function mon_r_u($name){
+		$this->load->database('pass');
+        $query = $this->db->query('SELECT `prochitano`,`nachalo` FROM `plan` WHERE `name` LIKE ?', $name);
+        $row = $query->row('prochitano');
+        $start_day = $query->row('nachalo');
+        
+        
+        $tday=strtotime("now");
+        $doday=strtotime($start_day);
+        $difday=date('z',$tday)-date('z',$doday); //Текущий день
+        
+        $fin=explode(' ',$row);
+        if(array_pop($fin)!=$difday){
+                                $row=$row.' '.(string)$difday;
+                                $s_n[]=$row;
+                                $s_n[]=$name;
+                                $query = $this->db->query('UPDATE `plan` SET `prochitano`=? WHERE `name` LIKE ?', $s_n);
+                                if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
+                                    }else $rs_r[]='Dublicate record';
+		return $rs_r;
+		}
+		public function add_p_u($name,$plane){
+		$this->load->database('pass');
+        $s_n[]=$plane;
+        $s_n[]=$name;
+        $query = $this->db->query('UPDATE `plan` SET `nazvan`=? WHERE `name`=?', $s_n);
+        if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
+		return $rs_r;
+		}
+		
+		public function listen_p_u($name){
+		$this->load->database('pass');		    
+        $query = $this->db->query('SELECT `prochitano`,`nachalo` FROM `plan` WHERE `name` LIKE ?', $name);
+        $row = $query->row('prochitano');
+        $start_day = $query->row('nachalo');
+        $origin=explode(' ',$row);
+
+        $tday=strtotime("now");
+        $doday=strtotime($start_day);
+        $difday=date('z',$tday)-date('z',$doday); //Текущий день
+        for($i=1;$i<=$difday;$i++)$etalon[]=$i;
+        $dif=array_diff($etalon,$origin);
+        foreach($dif as $vv)$rs_r[]=$vv;
+		return $rs_r;
 		}
    }								
 ?>

@@ -28,11 +28,30 @@
         '/api/search/строка поиска/ выдает номера статей и имя таблицы (стих, глава, книга) из Библии',
         '/api/search_encode/имя таблицы из search/ расшифровка названия таблицы для ссылки (глава и книга)',
         '/api/card/№ карты/ выдает координаты на карте (4-угла) и привязку к Библии, без аргументов выдает данные всех карт',
-        '/api/admin/ Данные идут методом POST, возвращается status=TRUE/FALSE/НЕ ПОДТВЕРЖДЕН в случае читателч/гостя/не подтвержден e-mail',
+        '/api/admin/ Данные идут методом POST, возвращается status=TRUE/FALSE/НЕ ПОДТВЕРЖДЕН в случае читателя/гостя/не подтвержден e-mail',
+        '/api/user_id/ИмяЧитателя/ Если имя зарегистрировано - возвращает статус регистрации',        
+        '/api/admin_add_fav/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/Номер стиха/Пометка/Цвет (#cococo)/ Проверяет наличие читателя в базе и при наличии добавляет в избранное стих',
+        '/api/admin_add_note/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/Номер стиха/Заметка/ Проверяет наличие читателя в базе и при наличии добавляет Заметку',
+        '/api/admin_zakladki/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/Цвет закладки (red,orange,green,blue,fuchsia)/ - Добавляет закладку соответствующего цвета',
+        '/api/admin_add_tolk/ЛогинЧитателя/Аббревиатура кнги (Gen)/Номер главы/НомерСтиха/id-толкования/Толкователь_по_русски - Добавляет толкование в избранное',
+        '/api/read_note/ЛогинЧитателя/ - Возвращает все заметки читателя и их id',
+        '/api/edit_note/id-заметки/Новый текст - Редактирует заметку с номером id',
+        '/api/delete_note/id-заметки/ - Удаляет заметку с номером ID',
+        '/api/read_fav_stih/ИмяЧитателя/ - Список всех стихов добавленных в избранное у читателя',
+        '/api/delete_fav_stih/id-закладки/ - Удаляет стих из избранного у читателя',
+        '/api/read_fav_tolk/ИмяЧитателя/ - Список толкований в избранном у читателя',
+        '/api/delete_fav_tolk/id-закладки/ - Удаляет толкование из избранного у читателя',
+        '/api/read_zakladki/Имя читателя/ - Показывает все закладки',
+        '/api/delete_zakladki/Имя читателя/Цвет закладки (red,orange,green,blue,fuchsia)/ - Удаляет у Читателя закладку определенного цвета',
+        '/api/read_plane/ - Возвращает все планы чтения',        
+        '/api/user_read_plane/Имя читателя/ - Возвращает план чтения конкретного читателя',
+        '/api/read_bible_user/Имя читателя/ - Возвращает чтения в формате функции chten_load на сегодня',
+        '/api/mon_read_user/Имя читателя/ - Добавляет один день в прочитанные дни',
+        '/api/add_plane_user/Имя читателя/План чтения |nazvan| из read_plane/ - Добавляет план чтения/меняет план чтения у читателя',
         '=============================================================================================================================================================',
-        '==== Остались добавить закладку, добавить комментарий, выбрать план чтения, следить за планом чтения, добавить толкование, все добавленные толкования,    ===',
+        '==  регистрация(!!!) следить за планом чтения, все добавленные толкования, стреловские функции   ==',
         '==============================================================================================================================================================',
-            );
+        );
 		$this->load->model('json_page');
 		$this->json_page->json_echo($list_api);
         }
@@ -189,10 +208,142 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
-        public function admin_add_fav($name='Алена11', $book='Gen', $glava='1', $stih='1',$tags='Заметка',$color='#cococo'){
-        $word=urldecode($name);
+        public function admin_add_fav($name='Алена', $book='Gen', $glava='1', $stih='1',$tags='Заметка',$color='#cococo'){
+        $name=urldecode($name);
+        $tags=urldecode($tags);
         $this->load->model('admin');
 		$result_model=$this->admin->admin_add_fav($name, $book, $glava, $stih, $tags, $color);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function admin_zakladki($name='Брат Георгий', $book='2Sam', $glava='5', $gamma='red'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->admin_zakladki($name, $book, $glava, $gamma);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function admin_add_note($name='Брат Георгий', $book='Gen', $glava='1', $stih='1',$tags='Заметка так заметка'){
+        $name=urldecode($name);
+        $tags=urldecode($tags);
+        $this->load->model('admin');
+		$result_model=$this->admin->admin_note($name, $book, $glava, $stih, $tags);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function admin_add_tolk($name='Брат Георгий', $book='Lev', $glava='23', $stih='10',$id_tolk='1', $ekzeget='Марк Подвижник прп.'){
+        $name=urldecode($name);
+        $ekzeget=urldecode($ekzeget);
+        $this->load->model('admin');
+		$result_model=$this->admin->admin_tolk($name, $book, $glava, $stih,$id_tolk, $ekzeget);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function read_note($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->read_n($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function edit_note($id='2134',$note='Нет это не заметка а СУПЕРзаметка'){
+        $note=urldecode($note);
+        $this->load->model('admin');
+		$result_model=$this->admin->edit_n($id, $note);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function delete_note($id='2137'){
+        $this->load->model('admin');
+		$result_model=$this->admin->delete_n($id);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function read_fav_stih($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->read_f_s($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function delete_fav_stih($id='4240'){
+        $this->load->model('admin');
+		$result_model=$this->admin->delete_f_s($id);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function read_fav_tolk($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->read_f_t($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function delete_fav_tolk($id='1389'){
+        $this->load->model('admin');
+		$result_model=$this->admin->delete_f_t($id);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function read_zakladki($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->read_z($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function delete_zakladki($name='Брат Георгий',$color='red'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->delete_z($name,$color);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function user_id($login){
+        $login=urldecode($login);
+        $this->load->model('admin');
+		$result_model=$this->admin->read_user_id($login);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function read_plane(){
+        $this->load->model('admin');
+		$result_model=$this->admin->read_p();
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function user_read_plane($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->u_read_p($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function read_bible_user($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->r_bible_u($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function mon_read_user($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->mon_r_u($name);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function add_plane_user($name='Брат Георгий',$plane='vz'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->add_p_u($name,$plane);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function listen_plane($name='Брат Георгий'){
+        $name=urldecode($name);
+        $this->load->model('admin');
+		$result_model=$this->admin->listen_p_u($name);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
