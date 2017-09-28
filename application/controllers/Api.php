@@ -58,8 +58,12 @@
         '/api/lecture/ - Тексты лектория',
         '/api/media/ID/ - Выводит медиафайл под учетной записью ID, без аргумента выводит все имеющиеся в базе данных медиазаписи',
         '/api/media_bible/Глава или стих библии/ - Выводит медиафайл соответствующий главе или стиху библии',
+        '/api/media_search/Контекст/ - Поиск контекста во всех медифайлах по всем полям',
+        '/api/root_login/Имя суперпользователя/ - Проверяет есть ли у читателя права суперпользователя',
+        '/api/root_list/Имя суперпользователя/ - Выдает список всех толкований внесенных суперпользователем',
+        '/api/root_add_lolk/ - Через форму админки суперпользователя методом POST вносятся данные и добавляются в базу',
         '=============================================================================================================================================================',
-        '==  все добавленные толкования   = media_search =',
+        '==  все добавленные толкования ',
         '==============================================================================================================================================================',
         );
 		$this->load->model('json_page');
@@ -427,6 +431,44 @@
 		$result_model=$this->media->media_b($word);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
-        }  
+        }
+        public function media_search($word='2 Тим.'){
+        $word=urldecode($word);
+        $this->load->model('media');
+		$result_model=$this->media->media_s($word);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        
+        //Это создает ключ
+        public function root_crypt($login='Брат Георгий'){
+        $login=urldecode($login);
+		$result_model=hash('sha512',$login);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        //Окончание создания ключа
+        
+        public function root_login($login='Брат Георгий'){
+        $login=urldecode($login);
+        $this->load->model('root');
+		$result_model=$this->root->root_l($login);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function root_list($login='Брат Георгий'){
+        $login=urldecode($login);
+        $this->load->model('root');
+		$result_model=$this->root->root_lst($login);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function root_add_tolk(){
+        $this->load->model('root');
+        $in_data=$_REQUEST;
+		$result_model=$this->root->root_a($in_data);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
    }
 ?>
