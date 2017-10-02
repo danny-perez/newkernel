@@ -61,9 +61,11 @@
         '/api/media_search/Контекст/ - Поиск контекста во всех медифайлах по всем полям',
         '/api/root_login/Имя суперпользователя/ - Проверяет есть ли у читателя права суперпользователя',
         '/api/root_list/Имя суперпользователя/ - Выдает список всех толкований внесенных суперпользователем',
-        '/api/root_add_lolk/ - Через форму админки суперпользователя методом POST вносятся данные и добавляются в базу',
+        '/api/root_add_lolk/ - Через форму админки суперпользователя методом POST вносятся толкования во временную базу данных',
+        '/api/root_edit_lolk/Имя суперпользователя/id записи/ - Через админку суперпользователя редактируются толкования во временной базе данных',
+        '/api/root_delete_lolk/Имя суперпользователя/id записи/ - Через админку суперпользователя помечаются как удаленные толкования во временной базе данных',
+        '/api/root_send_lolk/Имя суперпользователя/id записи/Если исследование=yes/ - Через админку суперпользователя толкование пересылается в рабочую базу данных а во временной базе - помечаются как MOVE',
         '=============================================================================================================================================================',
-        '==  все добавленные толкования ',
         '==============================================================================================================================================================',
         );
 		$this->load->model('json_page');
@@ -467,6 +469,27 @@
         $this->load->model('root');
         $in_data=$_REQUEST;
 		$result_model=$this->root->root_a($in_data);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function root_edit_tolk($login='Брат Георгий',$id='2'){
+        $login=urldecode($login);
+        $this->load->model('root');
+		$result_model=$this->root->root_e_t($login,$id);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function root_delete_tolk($login='Брат Георгий',$id='2'){
+        $login=urldecode($login);
+        $this->load->model('root');
+		$result_model=$this->root->root_d_t($login,$id);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function root_send_tolk($login='Брат Георгий',$id='1',$issled='NULL'){
+        $login=urldecode($login);
+        $this->load->model('root');
+		$result_model=$this->root->root_send_t($login,$id,$issled);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
