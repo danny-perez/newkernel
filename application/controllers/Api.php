@@ -89,12 +89,12 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }        
-        public function calc($cadate=NULL){
+        /*public function calc($cadate=NULL){
         $this->load->model('calc_calendar');
 		$result_model=$this->calc_calendar->data_now($cadate);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
-        }
+        }*/
         public function bible($abbreviation=NULL,$chapter=1){
         $this->load->model('bible');
 		$result_model=$this->bible->read_book($abbreviation,$chapter);
@@ -490,6 +490,16 @@
         $login=urldecode($login);
         $this->load->model('root');
 		$result_model=$this->root->root_send_t($login,$id,$issled);
+		$this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
+        public function calc($data='02.10.2017'){ //Дата начиная с 1000 года до 9999 года
+        $this->load->model('calc_calendar');
+		$result_pasha=$this->calc_calendar->pasha($data); //Пасха этого и предыдущего года [0]-этого [1]-предыдущего
+		$result_mineja=$this->calc_calendar->mineja($data); //Непереходящие праздники
+        $result_chten=$this->calc_calendar->chtenija($data,$result_pasha); //Чтения
+        $result_model[]=$result_mineja;
+        $result_model[]=$result_chten;
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
