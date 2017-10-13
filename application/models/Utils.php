@@ -4,44 +4,23 @@
 		Public function __construct(){ 
 		parent::__construct(); 
 		} 
-		public function separate($ptext){
-        $this->load->database('pass');
-        $query=$this->db->query('SELECT sokr,kn FROM books');
-        foreach ($query->result_array() as $row){$all_book[]=$row;}
-        for($i=0;$i<count($all_book);$i++){
-            $zn=$all_book[$i]; 
-            $st_zn='/'.$zn['sokr'].'/';
-            $ish=preg_match_all($st_zn, $ptext,$massiv,PREG_OFFSET_CAPTURE,0); 
-            if($massiv[0]) $kk[]=$massiv[0];
-                                            }
-        foreach($kk as $pipi){
-                            foreach($pipi as $mimi) $resultat[]=$mimi[1];
-                            }
-        $resultat[]=strlen($ptext);
-        $ii=count($resultat);
-        for($i=0;$i<$ii-1;$i++){
-                                        $res_pitek=substr($ptext,$resultat[$i],($resultat[$i+1]-$resultat[$i]));
-                                        $ann=explode('.',$res_pitek);
-                                        foreach($all_book as $one_m){
-                                                if((strcmp($one_m['sokr'],$ann[0]))==0) $ann[]=$one_m['kn'];
-                                                                    }
-                                        $kann[]=$ann;
-                                        }
-        foreach($kann as $zap){
-                $z1=trim($zap[1]);
-                $z11=explode(':',$z1);
-                $from_zapros='stih_'.$zap[2].(string)$z11[0];
-                $z111=explode('-',$z11[1]);
-                if(count($z111)<2) $z111[]=$z111[0];
-                $st_no_low=$z111[0];
-                $st_no_hight=$z111[1];
-                $this->db->close();
-                $this->load->database('stih');
-                $sql="SELECT * FROM $from_zapros WHERE st_no BETWEEN $st_no_low AND $st_no_hight";
-                $query=$this->db->query($sql);
-                foreach ($query->result_array() as $row){$parallel_point[]=$row;}
-                                }
-                return $parallel_point;
+		public function separate($ptext)
+		{
+		    $ptext=rtrim($ptext,'_');
+		    $nnz=explode('_',$ptext);
+		    $this->load->database('pass');
+            $query=$this->db->query('SELECT kn FROM books WHERE sokr LIKE ?',$nnz[0]);
+            $row=$query->row('kn');
+            $stih='stih_'.$row.(string)$nnz[1];
+            $this->db->close();
+            $this->load->database('stih');
+            $sql="SELECT * FROM $stih";
+            $query=$this->db->query($sql);
+            foreach ($query->result_array() as $row){$rs_stih[]=$row;}
+            $rs_res['bold']=$nnz[2];
+            if (isset($nnz[3])) $rs_res['bold2']=$nnz[3];
+            $rs_res['stih']=$rs_stih;
+            return $rs_res;
 		}
 		public function card_read($num_card){
 		if($num_card==='All'){
@@ -60,6 +39,23 @@
         $query=$this->db->query('SELECT * FROM perevody');
         foreach ($query->result_array() as $row){$rs_trans[]=$row;}
         return $rs_trans;    
+        }
+        
+/* ----------------- Добавлено ------------------ */
+        public function separate2($ptext){
+        setlocale(LC_ALL, 'ru_RU.utf8');
+		preg_match_all('/[0-9]?[ ]?\w+\.[ ][0-9]+:[0-9]+-?[0-9]*/u',$ptext,$sep1);
+		foreach($sep1[0] as $sep2)
+		{
+		    $sep2=trim($sep2);
+		    preg_match('/^[0-9]?[ ]?\w+/u',$sep2,$sep3);
+		    preg_match('/([0-9]+):([0-9]+)-?([0-9]*)/',$sep2,$sep4);
+		    $sep4=array_diff($sep4,array('',null));
+		    $zs='_';
+		    for($i=1;$i<count($sep4);$i++) $zs=$zs.$sep4[$i].'_';
+            $sep_final[]=$sep3[0].$zs;
+		}    
+        return $sep_final;   
         }
    }								
 ?>
