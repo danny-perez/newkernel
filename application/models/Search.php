@@ -34,5 +34,13 @@
                                 $rs_encode=$row.' '.(string)$temp4.':';
         return $rs_encode;
         }
+        public function search_list($st_no, $table_name){
+		                        $this->load->database('stih');
+                                $sql="SELECT * FROM $table_name WHERE st_no LIKE ?";
+                                $query=$this->db->query($sql,$st_no);
+                                foreach ($query->result_array() as $row) $rs_search_list[]=$row;
+                                                                        
+        return $rs_search_list;
+        }
    }
 ?>

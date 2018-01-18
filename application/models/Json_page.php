@@ -5,6 +5,7 @@
 									parent::__construct(); 
 									} 
 		public function json_code($json_data){
+		                $json_data['debug']=$_SERVER;
                         $result=json_encode($json_data);
 		                header('Content-Type:application/json;charset=utf-8');
                 		echo $result;

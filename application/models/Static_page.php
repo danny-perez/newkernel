@@ -18,10 +18,16 @@
 		}
 		public function l_news(){
 		$this->load->database('default');
-        $query = $this->db->query('SELECT * FROM `static_page` WHERE `page_type` = 2');
+        $query = $this->db->query('SELECT id,page_type,title as date, FROM `static_page` WHERE `page_type` = 2');
 		foreach ($query->result_array() as $row){$rs_read[]=$row;}
 		return $rs_read;
 		}		
+		public function l_news2(){
+		$this->load->database('default');
+        $query = $this->db->query('SELECT `id`,`title` as date, SUBSTRING(`text`,1,100) as titles, `text` FROM `static_page` WHERE `page_type`=2');
+		foreach ($query->result_array() as $row){$rs_read[]=$row;}
+		return $rs_read;
+		}
 		public function l_upd(){
 		$this->load->database('default');
         $query = $this->db->query('SELECT * FROM `static_page` WHERE `page_type` = 3');

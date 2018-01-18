@@ -13,6 +13,7 @@
         $this->load->database('pass');
         $query = $this->db->query('SELECT * FROM user WHERE login LIKE ? AND passw LIKE sha1(?)',$s_n);
 		foreach ($query->result_array() as $row){$rs_read[]=$row; $row['status']='TRUE';}
+	//	var_dump($rs_read);
 		if($row['status']==='FALSE'){
 		$query = $this->db->query('SELECT login,email FROM user_vrem WHERE login LIKE ?',$s_n[0]);
 		foreach ($query->result_array() as $row){$rs_read[]=$row; $row['status']='НЕ ПОДТВЕРЖДЕН';}
@@ -145,6 +146,13 @@
         foreach ($query->result() as $row)$rs_r[]=$row;
 		return $rs_r;
 		}
+		public function read_f_s2($name){
+        $this->load->database('pass');
+        $query = $this->db->query('SELECT * FROM `pass`.`favorite` LEFT JOIN `ekzeget`.`new_book` ON `pass`.`favorite`.`kn` LIKE `ekzeget`.`new_book`.`kn` WHERE `pass`.`favorite`.`name_user` LIKE ?',$name);
+        foreach ($query->result() as $row)$rs_r[]=$row;
+		return $rs_r;
+		}		
+		
 		public function delete_f_s($id){
         $this->load->database('pass');
         $query = $this->db->query('DELETE FROM `favorite` WHERE `id`=?',$id);
@@ -186,7 +194,7 @@
 		public function read_user_id($login){
         $this->load->database('pass');
         $row['status']='FALSE';
-        $query = $this->db->query('SELECT login,email FROM user WHERE login LIKE ?',$login);
+        $query = $this->db->query('SELECT login,email,country,sity,o_sebe,data,last_data FROM user WHERE login LIKE ?',$login);
 		foreach ($query->result_array() as $row){$rs_read[]=$row; $row['status']='REGISTERED';}
 		if($row['status']==='FALSE'){
 		$query = $this->db->query('SELECT login,email FROM user_vrem WHERE login LIKE ?',$login);
@@ -239,9 +247,43 @@
         if(count($n1)>1){$sti=explode('-',$n1[1]); $sti[]=$n1[0];} else {$sti[0]=0; $sti[1]=0;}
         $rs_f[]=$sti[2].' '.$sti[0].' '.$sti[1];
         }
-		//print_r($rs_f);
+		//var_dump($mchten);
 		return $rs_f;
 		}
+		
+		
+		public function load_plane($name)
+		{
+		    if($name)
+		    { 
+                $this->load->database('default');
+                $query = $this->db->query('SELECT * FROM chteniya WHERE title LIKE ?',$name);
+		        $row = $query->row('plan');
+		        $rr=preg_replace('/"?,?/','',$row);
+                $rr=trim($rr); //строка с планом чтений
+                $plan = explode(' ',$rr);
+                foreach($plan as $b)
+                {
+                    $entry = substr($b,0,2);
+                    $ddd = '%'.$entry.'%';
+                    $query = $this->db->query('SELECT abreviation_rus FROM new_book WHERE kn LIKE ?',$ddd);
+		            $row = $query->row('abreviation_rus');
+		            $num = preg_replace('/[0-9]?[a-z]+/','',$b);
+		            $chap = (int)$num;
+		            $chten = $row.'.'.$chap;
+		            $rs_r[] = $chten;
+                }
+		    } 
+		    else{
+		            $this->load->database('default');
+                    $query = $this->db->query('SELECT id,title FROM chteniya');
+                    foreach ($query->result() as $row)$rs_r[]=$row; //Список чтения в аббревиауре
+		        }
+			return $rs_r;
+		}
+		
+		
+		
 		public function mon_r_u($name){
 		$this->load->database('pass');
         $query = $this->db->query('SELECT `prochitano`,`nachalo` FROM `plan` WHERE `name` LIKE ?', $name);
@@ -296,7 +338,11 @@
 		    $s_n[]='no';
 		    $s_n[]=date('d.m.Y',$tod);
 		$this->load->database('pass');
+        // var_dump($s_n);
+    //echo json_encode($_SERVER);
+     // var_dump('`login`, `passw`, `email`, `country`, `sity`, `o_sebe`, `data`, `see_email`, `last_data`');
         $query = $this->db->query('INSERT INTO `user`(`login`, `passw`, `email`, `country`, `sity`, `o_sebe`, `data`, `see_email`, `last_data`) VALUES (?,sha1(?),?,?,?,?,?,?,?)', $s_n);
+     //$query=true;
         if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
 		return $rs_r;
 		}
@@ -314,6 +360,12 @@
         $query = $this->db->query('UPDATE `user` SET `passw`=?,`email`=?,`country`=?,`sity`=?,`o_sebe`=?,`see_email`=?,`last_data`=? WHERE `login` LIKE ?', $s_n);
         if(!$query) $rs_r[]='Not_update'; else $rs_r[]='Successful';
 		return $rs_r;
+		}
+		public function get_data_email($email){
+		$this->load->database('pass');
+        $query = $this->db->query('SELECT login,country,sity,o_sebe,data,see_email,last_data FROM user WHERE email LIKE ?',$email);
+		foreach ($query->result_array() as $row){$rs_read[]=$row;}
+		return $rs_read;
 		}
    }								
 ?>

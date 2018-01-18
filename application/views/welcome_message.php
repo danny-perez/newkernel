@@ -1,19 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>NewServer-H9i</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<h2>Вход</h2>
+<h2>Вх in 213</h2>
 <form method="post" action="api/admin">
 Логин: <br />
 <input name="login" type="text" size="25" maxlength="30" value="Вася" /> <br />
 Пароль: <br />
 <input name="password" type="password" size="25" maxlength="30" value="" /> <br />
-Captcha<br>
+Captcha 2 пробела<br>
 <input name="captcha" type="text" size="25" maxlength="30" value="Кто выше всех в религии" /> <br />
 <input type="submit" name="enter" value="Вход" />
 </form>
