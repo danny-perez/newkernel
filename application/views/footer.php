@@ -34,6 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       });
 
       $('#demoSelect').select2();
+      $('#demoSelect2').select2();
     </script>
   </body>
 </html>

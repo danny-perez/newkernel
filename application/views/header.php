@@ -28,10 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- Navbar Right Menu-->
           <div class="navbar-custom-menu">
             <ul class="top-nav">
+              <!-- Help Menu-->
+              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-question-circle fa-lg"></i></a></li>
               <!--Notification Menu-->
               <li class="dropdown notification-menu"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell-o fa-lg"></i></a></li>
               <!-- User Menu-->
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a></li>
+
             </ul>
           </div>
         </nav>
