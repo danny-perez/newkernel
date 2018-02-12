@@ -20,8 +20,48 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-
-		$this->load->view('welcome_message');
-		
+		$activeMenu0='';
+		$activeMenu1='';
+		$activeMenu2='';
+		$activeMenu3='';
+		$activeMenu4='';
+		$activeMenu5='';
+		$activeMenu6='';
+		$activeMenu7='';
+		$activeMenu8='';
+		$activeMenu9='';
+		$activeMenu10='';
+		$AddresStringUrl = $_SERVER['REQUEST_URI'];
+		switch ($AddresStringUrl) {
+			case '/':
+					$activeMenu0 = 'class="active"';
+				break;
+				case '/bible':
+						$activeMenu1 = 'class="active"';
+					break;
+					case '/sermon':
+							$activeMenu2 = 'class="active"';
+						break;
+						case '/exegesis':
+								$activeMenu3 = 'class="active"';
+							break;
+							case '/dictionaries':
+									$activeMenu4 = 'class="active"';
+								break;
+								case '/maps':
+										$activeMenu5 = 'class="active"';
+									break;
+									case '/medialib':
+											$activeMenu6 = 'class="active"';
+										break;
+										default:
+												$activeMenu7 = 'active';
+		}
+		$this->load->model('news');
+		$result_model=$this->news->news('All');
+		$dataPage = compact('activeMenu0','activeMenu1','activeMenu2','activeMenu3','activeMenu4','activeMenu5','activeMenu6','activeMenu7','result_model');
+    $this->load->view('header',$dataPage);
+    $this->load->view('start_page');
+    $this->load->view('footer');
 	}
 }

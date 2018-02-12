@@ -1,7 +1,7 @@
-<?php 
+<?php
    //Application/Controllers/Api.php
-   class Api extends CI_Controller {  
-	    public function index() { 
+   class Api extends CI_Controller {
+	    public function index() {
         $list_api=array(
         '==================================',
         '-------Полный перечень API--------',
@@ -14,13 +14,13 @@
         '/api/bible_rus_link/Ссылка по русски в формате 1 Тим. 10:11-16/ - возвращает текст библии по указанной ссылке ',
         '/api/bible/англ.аббревиатура книги/глава/ - выдает текст главы, без аргументов - список книг, англ.аббревиатура книги, число глав, ветхий завет (testament=0) или новый завет',
         '/api/urlencode/название книги по русски/ - выдает аббревиатуру пригодную для функции bible',
-        '/api/perevod/ возвращает список возможных переводов Библии',        
+        '/api/perevod/ возвращает список возможных переводов Библии',
         '/api/ekzeget/англ.аббревиатура книги/глава/ - выдает список толкователей (экзегетов) конкретной книги и главы, без аргументов - Gen/1',
         '/api/tolk/англ.аббревиатура книги/глава/ - выдает тексты толкований всех авторов по данной главе (st_no - номер стиха), без аргументов - Gen/1',
         '/api/tolk_one/английская аббревиатура книги/глава/экзегет по русски/ - текст толкований по главе КОНКРЕТНОГО экзегета',
-        
+
         '/api/print_tolk/английская аббревиатура книги/глава/экзегет по русски/ - Выдает поле LIST_STIH для вывода стиха или диаппазона стихов, если ПУСТОЕ ПОЛЕ стих НЕ ВЫВОДИТЬ!, затем выдается текст толкований стиха',
-        
+
         '/api/issled/англ.аббревиатура книги/глава/ - выдает тексты исследований всех авторов по данной главе (st_no - номер стиха), без аргументов - Gen/1',
         '/api/separate/Быт. 1:26-34 Быт. 1:27/ - выдает массив правильно разобранных параллельных местпо одному',
         '/api/parallel/Быт._1_26_34_/ - выдает массив из текста главы и выделенного участка текста из параллельных мест',
@@ -35,7 +35,7 @@
         '/api/dict_letter/алиас словаря/буква словаря в ЛЮБОМ регистре/ выдает id статьи и список заголовков',
         '/api/dict_text/id-статьи из функции dict_letter/ выдает заголовок статьи и содержание статьи словаря',
         '/api/ekzeget_all/имя экзегета по русски/ выдает все толкования данного автора, если без аргументов, то список экзегетов с рассказом о них',
-        '/api/ekzeget_one/имя экзегета по русски/ выдает все толкования данного автора а так же описание данного экзегета, без аргументов не работает',        
+        '/api/ekzeget_one/имя экзегета по русски/ выдает все толкования данного автора а так же описание данного экзегета, без аргументов не работает',
         '/api/ekzeget_all_en/имя экзегета по русски/ выдает все толкования данного автора, если без аргументов, то список экзегетов с рассказом о них',
         '/api/ekzeget_all_link/имя таблицы из функции ekzeget_all/id записи в таблице/ выдает все толкования данного автора',
         '/api/search/строка поиска/ выдает номера статей и имя таблицы (стих, глава, книга) из Библии',
@@ -60,7 +60,7 @@
         '/api/delete_fav_tolk/id-закладки/ - Удаляет толкование из избранного у читателя',
         '/api/read_zakladki/Имя читателя/ - Показывает все закладки',
         '/api/delete_zakladki/Имя читателя/Цвет закладки (red,orange,green,blue,fuchsia)/ - Удаляет у Читателя закладку определенного цвета',
-        '/api/read_plane/ - Возвращает все планы чтения',    
+        '/api/read_plane/ - Возвращает все планы чтения',
         '/api/work_plane/Имя плана/ - без параметров возвращает список планов, с именем плана - план чтений',
         '/api/user_read_plane/Имя читателя/ - Возвращает план чтения конкретного читателя',
         '/api/read_bible_user/Имя читателя/ - Возвращает чтения в формате функции chten_load на сегодня',
@@ -98,7 +98,7 @@
         $this->load->model('json_page');
         $this->json_page->json_echo($result_mod);
         }
-        
+
         public function urlencode($codeurl='1 Пар. 1:1-10'){
         $codeurl=urldecode($codeurl);
         $this->load->model('utils');
@@ -106,7 +106,7 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
-        
+
         public function list_news(){
         $this->load->model('static_page');
 		$result_model=$this->static_page->l_news2();
@@ -118,7 +118,7 @@
 		$result_model=$this->static_page->l_upd();
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
-        }        
+        }
         /*public function calc($cadate=NULL){
         $this->load->model('calc_calendar');
 		$result_model=$this->calc_calendar->data_now($cadate);
@@ -150,7 +150,7 @@
         $this->json_page->json_echo($result_model);
         }
         public function tolk_one($abbreviation='Gen',$chapter=1,$ekzeget='Василий Великий свт.'){
-        $ekzeget=urldecode($ekzeget);    
+        $ekzeget=urldecode($ekzeget);
         $this->load->model('bible');
 		$result_model=$this->bible->read_tolk_one($abbreviation,$chapter,$ekzeget);
 		$this->load->model('json_page');
@@ -254,7 +254,7 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_mod);
         }
-        
+
         public function ekzeget_all($name_ekzeget=NULL){
         $name_ekzeget=urldecode($name_ekzeget);
         $this->load->model('ekzeget');
@@ -268,7 +268,7 @@
 		$result_model=$this->ekzeget->list_ekzeget2($name_ekzeget);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
-        }        
+        }
         public function ekzeget_all_link($table_name='tolk_1car1',$id_table='1'){
         $this->load->model('ekzeget');
 		$result_model=$this->ekzeget->list_ekzeget_link($table_name,$id_table);
@@ -459,7 +459,7 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
-        
+
         public function work_plane($name=null){
         $name=urldecode($name);
         $this->load->model('admin');
@@ -467,7 +467,7 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
-        
+
         public function read_bible_user($name='Брат Георгий'){
         $name=urldecode($name);
         $this->load->model('admin');
@@ -525,13 +525,13 @@
 		$result_model=$this->lect->lect_up();
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
-        }  
+        }
         public function media($id=null){
         $this->load->model('media');
 		$result_model=$this->media->list_rec($id);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
-        }  
+        }
         public function media_bible($word='Mt', $chapter='1', $type_media='video'){
         $this->load->model('media');
 		$result_model=$this->media->media_b($word, $chapter, $type_media);
@@ -545,7 +545,7 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
-        
+
         //Это создает ключ
         public function root_crypt($login='Брат Георгий'){
         $login=urldecode($login);
@@ -554,7 +554,7 @@
         $this->json_page->json_echo($result_model);
         }
         //Окончание создания ключа
-        
+
         public function root_login($login='Брат Георгий'){
         $login=urldecode($login);
         $this->load->model('root');
@@ -614,7 +614,7 @@
         $this->json_page->json_echo($result_model);
         }
         public function print_tolk($abbreviation='Gen',$chapter=1,$ekzeget='Василий Великий свт.'){
-        $ekzeget=urldecode($ekzeget);    
+        $ekzeget=urldecode($ekzeget);
         $this->load->model('bible');
 		$result_model=$this->bible->read_tolk_one($abbreviation,$chapter,$ekzeget);
 		$this->load->model('complex');
@@ -624,7 +624,7 @@
         }
         /*
         public function bible_rus_link($link='1 Тим. 5:1–10'){
-        $link=urldecode($link);    
+        $link=urldecode($link);
         $this->load->model('bible');
 		$result_model=$this->bible->rus_link($link);
 		$this->load->model('json_page');
@@ -632,12 +632,19 @@
         }
         */
         public function bible_rus_link($link='1 Тим. 5:23-6:2'){
-        $link=urldecode($link);    
+        $link=urldecode($link);
         $this->load->model('bible');
 		$result_model=$this->bible->rus_link2($link);
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
-        
+        public function read_news($dat)
+        {
+          $this->load->model('news');
+          $result_model=$this->news->news('All');
+          $this->load->model('json_page');
+          $this->json_page->json_echo($result_model);
+        }
+
    }
 ?>
