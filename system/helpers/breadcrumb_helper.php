@@ -10,22 +10,22 @@ if ( ! function_exists('byte_format'))
 					$breadcrumbString = '<a href="#">Главная</a>';
 				break;
 				case '/bible':
-						$breadcrumbString = '<a href="#">Библия</a>';
+						$breadcrumbString = 'Библия';
 					break;
 					case '/sermon':
-							$breadcrumbString = '<a href="#">Проповеди</a>';
+							$breadcrumbString = 'Проповеди';
 						break;
 						case '/exegesis':
-								$breadcrumbString = '<a href="#">Толкования</a>';
+								$breadcrumbString = 'Толкования';
 							break;
 							case '/dictionaries':
-									$breadcrumbString = '<a href="#">Словари</a>';
+									$breadcrumbString = 'Словари';
 								break;
 								case '/maps':
-										$breadcrumbString = '<a href="#">Карты</a>';
+										$breadcrumbString = 'Карты';
 									break;
 									case '/medialib':
-											$breadcrumbString = '<a href="#">Медиатека</a>';
+											$breadcrumbString = 'Медиатека';
 										break;
 										case '/history':
 												$breadcrumbString = 'О проекте&ensp;/&ensp;История проекта';
@@ -39,6 +39,8 @@ if ( ! function_exists('byte_format'))
 													case '/donations':
 															$breadcrumbString = 'О проекте&ensp;/&ensp;Пожертвования';
 														break;
+            default:
+                $breadcrumbString = 'Другой раздел';
 		}
 		return $breadcrumbString;
 	}

@@ -35,6 +35,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       $('#demoSelect').select2();
       $('#demoSelect2').select2();
+      //-----------------------------User script-----------------------------
+      $('#newTestament').click(function () {
+          var option_value = $("#demoSelect").val();
+          var mylink = "/newtestament?book="+option_value;
+          location.href=mylink;
+      })
+      
     </script>
   </body>
 </html>

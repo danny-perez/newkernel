@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php
                 foreach($new_t as $new_test)
                 {
-                  echo '<option>';
+                  echo '<option value="',$new_test['kn'],'">';
                   echo $new_test['name'];
                   echo '</option>';
                 }
@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </optgroup>
           </select>
         </div>
-        <br><p align="right"><a class="btn btn-primary icon-btn" href="#"><i class="fa fa-book"></i>Читать</a></p>
+        <br><p align="right"><a class="btn btn-primary icon-btn" href="#" id="newTestament"><i class="fa fa-book"></i>Читать</a></p>
       </div>
     </div>
     <div class="col-md-6">
