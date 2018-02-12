@@ -47,9 +47,14 @@ class Bible extends CI_Controller
                     default:
                         $activeMenu7 = 'active';
     }
+    $this->load->model('bible2');
+    $new_testament=$this->bible2->read_book(1);
+    $old_testament=$this->bible2->read_book(0);
+    $testament['new_t']=$new_testament;
+    $testament['old_t']=$old_testament;
     $dataPage = compact('activeMenu0','activeMenu1','activeMenu2','activeMenu3','activeMenu4','activeMenu5','activeMenu6','activeMenu7');
     $this->load->view('header',$dataPage);
-    $this->load->view('start_page');
+    $this->load->view('biblii_page',$testament);
     $this->load->view('footer');
   }
 }
