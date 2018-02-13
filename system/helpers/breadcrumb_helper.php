@@ -5,6 +5,7 @@ if ( ! function_exists('byte_format'))
 	function breadcrumb()
 	{
 		$AddresStringUrl = $_SERVER['REQUEST_URI'];
+	if(strpos($AddresStringUrl,'?')>0){$cleanString=explode('?',$AddresStringUrl); $AddresStringUrl=$cleanString[0];}
 		switch ($AddresStringUrl) {
 			case '/':
 					$breadcrumbString = '<a href="#">Главная</a>';
@@ -39,8 +40,12 @@ if ( ! function_exists('byte_format'))
 													case '/donations':
 															$breadcrumbString = 'О проекте&ensp;/&ensp;Пожертвования';
 														break;
-            default:
-                $breadcrumbString = 'Другой раздел';
+														case '/newtestament':
+																$breadcrumbString = '<a href="/bible">Библия</a>&ensp;/&ensp;Новый Завет';
+															break;
+															case '/oldtestament':
+																	$breadcrumbString = '<a href="/bible">Библия</a>&ensp;/&ensp;Ветхий Завет';
+																break;
 		}
 		return $breadcrumbString;
 	}

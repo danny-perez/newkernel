@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </optgroup>
           </select>
         </div>
-        <br><p align="right"><a class="btn btn-primary icon-btn" href="#"><i class="fa fa-book"></i>Читать</a></p>
+        <br><p align="right"><a class="btn btn-primary icon-btn" href="#" id="oldTestament"><i class="fa fa-book"></i>Читать</a></p>
       </div>
     </div>
 		<div class="col-md-12">

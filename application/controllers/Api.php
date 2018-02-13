@@ -131,6 +131,12 @@
 		$this->load->model('json_page');
         $this->json_page->json_echo($result_model);
         }
+        public function api_bible($kn){
+        $this->load->model('bible');
+        $result_model=$this->bible->api_book($kn);
+        $this->load->model('json_page');
+        $this->json_page->json_echo($result_model);
+        }
         public function perevod(){
         $this->load->model('utils');
 		$result_model=$this->utils->translate();
