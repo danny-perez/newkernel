@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php
                 foreach($old_t as $old_test)
                 {
-                  echo '<option>';
+                  echo '<option value="',$old_test['kn'],'">';
                   echo $old_test['name'];
                   echo '</option>';
                 }
