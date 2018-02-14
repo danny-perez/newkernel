@@ -1,0 +1,110 @@
+[33mcommit 889ba6b971383ee51e93eb5cb00f9875a694edac[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Tue Feb 13 17:59:26 2018 +0300
+
+    Release 0.6.0
+
+[33mcommit 4264bc9aa25ee297d620092e6c0037d43873b86c[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Tue Feb 13 17:16:28 2018 +0300
+
+    Release 0.5.0
+
+[33mcommit 9804f91597b69683c9a43429f60236cb18b79223[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Mon Feb 12 23:07:03 2018 +0300
+
+    home release
+
+[33mcommit 02a76cac4c0e185fa9f851ce9ecdab9391c0e1ae[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Mon Feb 12 18:02:23 2018 +0300
+
+    Release 0.3.0
+
+[33mcommit 272572ac7efc69061c66d6ab0d4e59766016908f[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Mon Feb 12 17:00:32 2018 +0300
+
+    Release 0.2.0
+
+[33mcommit a694d9e9ab18f0fe6199dec7cb7f545aee410ff2[m
+Merge: c15851b 729d30e
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Mon Feb 12 15:14:33 2018 +0300
+
+    Merge branch 'master' of https://github.com/2feed-pw/newkernel
+
+[33mcommit c15851b16d96f2273ff09a3f0a0c8c89157006c6[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Mon Feb 12 15:08:12 2018 +0300
+
+    Release version 0.1.0
+
+[33mcommit 729d30ef6b98f952d43f16782621e8076d3b342e[m
+Author: MosheTufeed <35554023+2feed-pw@users.noreply.github.com>
+Date:   Mon Feb 12 07:35:55 2018 +0300
+
+    Start new release
+    
+    This new release project
+
+[33mcommit 9406441a4a6ec27fc5f8e1160109a1531b80c8c4[m
+Author: 2feed-pw <2feed.pw@protonmail.com>
+Date:   Thu Jan 18 09:45:23 2018 +0300
+
+    Final release for iTech
+
+[33mcommit 784f5ebd67a580eea2273a0ec44039d6a3caadfa[m
+Author: root <myu940@mail.ru>
+Date:   Fri Oct 13 13:31:27 2017 +0300
+
+    New version kernel, change logic function
+
+[33mcommit 50692153c1638f2fff019c7432dc8b8db7d7ff3a[m
+Author: root <myu940@mail.ru>
+Date:   Fri Oct 13 13:20:02 2017 +0300
+
+    This refresh version and clear error 13.10.2017
+
+[33mcommit 8b0a33ed135ccad85ad88cbf63cbbc18f29a0209[m
+Author: root <myu940@mail.ru>
+Date:   Mon Oct 2 12:50:38 2017 +0300
+
+    Final version
+
+[33mcommit 2ef6b2faf747becbd4baac83459559a02928d23a[m
+Author: root <myu940@mail.ru>
+Date:   Mon Oct 2 08:02:00 2017 +0300
+
+    This final ohne calc
+
+[33mcommit ec150a8e9522c9d8ce795a79bb59dda677374fc5[m
+Author: root <myu940@mail.ru>
+Date:   Thu Sep 28 09:17:26 2017 +0300
+
+    All kernel + function superadmin
+
+[33mcommit bb50da2386a319b878516cb1dc6b1ef78b827eff[m
+Author: root <myu940@mail.ru>
+Date:   Tue Sep 26 18:51:59 2017 +0300
+
+    50
+
+[33mcommit 95354c3146175b9a52e5a71f14adc73415bcd616[m
+Author: root <myu940@mail.ru>
+Date:   Tue Sep 26 14:08:42 2017 +0300
+
+    All main function
+
+[33mcommit 646c8f91fd330aeab14f39a65e6ebe3a4ed72054[m
+Author: root <myu940@mail.ru>
+Date:   Fri Sep 22 14:20:39 2017 +0300
+
+    NewVersion DBconnect
+
+[33mcommit d6b609c6daa7f1034103a1642f3c5a7dc28fd6f0[m
+Author: root <myu940@mail.ru>
+Date:   Fri Sep 22 08:56:01 2017 +0300
+
+    Start project 22_09_2017
