@@ -12,9 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h3 class="title">Выбор главы</h3>
             </div>
             <div class="card-body">
-                <select class="form-control" id="select" onchange="load_chapter();">
+                <select name='chapt' class="form-control" id="selection" onchange="load_chapter('/newtestament?book=<?=$kn;?>&chapter=');">
                     <?php
-                        for($i=1;$i<$num_chap;$i++) echo "<option>$i</option>";
+                        for($i=1;$i<$num_chap;$i++) echo "<option value='$i'>$i</option>";
                     ?>
                 </select>
             </div>

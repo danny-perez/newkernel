@@ -48,7 +48,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       })
 
       //=======================pagination====================================
-        function load_chapter(){
+        function load_chapter(link_bi)
+        {
+            var zn = $('#selection').val();
+            var resu=link_bi+zn;
+            location.href=resu;
         }
     </script>
   </body>
