@@ -6,32 +6,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!---------------------------------------------------------------->
 <!------><div class="row"><!------------------>
 <!-------------------------------------------->
-	<div class="col-md-12">
-		<div class="bs-component" align="center">
-			<ul class="pagination">
-				<li><a href="#" id='f_min'>&laquo;</a></li>
-			</ul>
-			<ul class="pagination" id='pagination_ul'>
-				<li><a href="#" id='f1'>1</a></li>
-				<?php if($num_chap>1)echo "<li><a href='#' id='f2'>2</a></li>";?>
-				<?php if($num_chap>2)echo "<li><a href='#' id='f3'>3</a></li>";?>
-				<?php if($num_chap>3)echo "<li><a href='#' id='f4'>4</a></li>";?>
-				<?php if($num_chap>4)echo "<li><a href='#' id='f5'>5</a></li>";?>
-				<?php if($num_chap>5)echo "<li class='disabled'><a href='#'>...</a></li>";?>
-				<?php if($num_chap>6)echo "<li><a href='#' id='num_max'>$num_chap</a></li>";?>
-			</ul>
-			<ul class="pagination">
-				<li><a href="#" id='f_max'>&raquo;</a></li>
-			</ul>
-		</div>
+	<div class="col-md-2">
+        <div class="card">
+            <div class="card-title-w-btn">
+                <h3 class="title">Выбор главы</h3>
+            </div>
+            <div class="card-body">
+                <select class="form-control" id="select" onchange="load_chapter();">
+                    <?php
+                        for($i=1;$i<$num_chap;$i++) echo "<option>$i</option>";
+                    ?>
+                </select>
+            </div>
+        </div>
   </div>
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-title-w-btn">
-				<h3 class="title">Новый Завет</h3>
+				<h3 class="title">Новый Завет, Глава <?=$chapter;?></h3>
 			</div>
 			<div class="card-body">
-				<p align='justify'> точки зрения Новый Завет является Божиим откровением и представляет собой центральное открытие Богом Самого Себя и Своей воли людям.</p>
+				<p align='justify'>
+                    <?php
+                    foreach($text_book as $tb)
+				    {
+				        echo '<sup>',$tb['st_no'],'</sup>',$tb['st_text'];
+				    }
+				    ?>
+                </p>
 			</div>
 		</div>
 	</div>

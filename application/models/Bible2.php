@@ -4,17 +4,29 @@
 		Public function __construct(){
 		parent::__construct();
 		}
-		public function read_book($testament){ //Формат 01.01.2010 по 2299 год
+	public function read_book($testament){
         $this->load->database('ekzeget');
         $query=$this->db->query('SELECT `name`,`kn` FROM `new_book` WHERE `testament`=?',$testament);
+        $this->db->close();
         foreach ($query->result_array() as $row){$list_book[]=$row;}
         return $list_book;
 		}
-    public function read_chapters($kn){ //Формат 01.01.2010 по 2299 год
+    public function read_chapters($kn){
         $this->load->database('ekzeget');
         $query=$this->db->query('SELECT `chapter` FROM `new_book` WHERE `kn` LIKE ?',$kn);
+        $this->db->close();
         foreach ($query->result_array() as $row){$lot_chapters=$row['chapter'];}
         return $lot_chapters;
+    }
+    public function text_book($kn, $chapter=1)
+    {
+        $from = 'stih_'.$kn.$chapter;
+        $sql = "SELECT * FROM $from WHERE 1";
+        $this->load->database('stih');
+        $query=$this->db->query($sql);
+        $this->db->close();
+        foreach ($query->result_array() as $row){$text_book[]=$row;}
+        return $text_book;
     }
    }
 ?>
