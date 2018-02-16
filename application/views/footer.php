@@ -54,6 +54,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             var resu=link_bi+zn;
             location.href=resu;
         }
+        function change_translate(trans_link)
+        {
+            var res = $('#sel_translate').val();
+            var res_link = trans_link+res;
+            location.href=res_link;
+        }
     </script>
   </body>
 </html>

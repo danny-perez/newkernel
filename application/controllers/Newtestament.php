@@ -12,6 +12,7 @@ class Newtestament extends CI_Controller
   {
     $book = $_REQUEST['book'] ?? '';
     $chapter = $_REQUEST['chapter'] ?? '1';
+    $translate = $_REQUEST['translate'] ?? 'st_text';
     $activeMenu0='';
     $activeMenu1='';
     $activeMenu2='';
@@ -27,11 +28,14 @@ class Newtestament extends CI_Controller
     $this->load->model('bible2');
     $number_chapters=$this->bible2->read_chapters($book);
     $data['kn'] = $book;
+    $data['title_kn'] = $this->bible2->kn_to_title($book);
     $data['chapter'] = $chapter;
     $data['num_chap']=$number_chapters;
-    $this->load->model('bible2');
     $text_book=$this->bible2->text_book($book,$chapter);
     $data['text_book']=$text_book;
+    $data['translate'] = $this->bible2->read_translate();
+    $data['real_translate'] = $translate;
+    $data['translate_select'] = $this->bible2->perevod_to_select($translate);
     $dataPage = compact('activeMenu0','activeMenu1','activeMenu2','activeMenu3','activeMenu4','activeMenu5','activeMenu6','activeMenu7');
     $this->load->view('header',$dataPage);
     $this->load->view('newtestament_page',$data);

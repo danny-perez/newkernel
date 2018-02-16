@@ -5,46 +5,32 @@
  * ================================*/
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700);
 @import url(https://fonts.googleapis.com/css?family=Niconne);
-@import url('https://fonts.googleapis.com/css?family=Caveat|Comfortaa|Cuprum|EB+Garamond|Fira+Sans|Fira+Sans+Condensed|Lobster|Lora|Marck+Script|Marmelad|Oswald|PT+Sans+Caption|Pacifico|Scada|Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=Arimo|Encode+Sans+Condensed|Lobster|Oswald|PT+Sans+Narrow|Roboto+Condensed|Russo+One|Ubuntu|Ubuntu+Condensed');
 /*
  * Bootstrap v3.3.6
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /****************************************************************************/
 /*
-font-family: 'Oswald', sans-serif;
-font-family: 'Source Sans Pro', sans-serif;
-font-family: 'Lora', serif;
-font-family: 'Fira Sans', sans-serif;//
+font-family: 'Arimo', sans-serif;
+font-family: 'Encode Sans Condensed', sans-serif;
 font-family: 'Lobster', cursive;
-font-family: 'Pacifico', cursive;
-font-family: 'EB Garamond', serif;
-font-family: 'Comfortaa', cursive;
-font-family: 'PT Sans Caption', sans-serif;//
-font-family: 'Cuprum', sans-serif;
-font-family: 'Caveat', cursive;
-font-family: 'Marck Script', cursive;
-font-family: 'Scada', sans-serif;
-font-family: 'Fira Sans Condensed', sans-serif;
-font-family: 'Marmelad', sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'PT Sans Narrow', sans-serif;
+font-family: 'Roboto Condensed', sans-serif;
+font-family: 'Russo One', sans-serif;
+font-family: 'Ubuntu', sans-serif;
+font-family: 'Ubuntu Condensed', sans-serif;
 */
 /****************************************************************************/
 @font-face {
-font-family: 'Greek';
-src: url('TYPE/greek.eot');
-src: local('Greek'),
- /*url('theanodidot-regular-webfont.woff') format('woff'),*/
- url('TYPE/greek.ttf') format('truetype'),
- /*url('theanodidot-regular-webfont.svg#webfontE40g3tc3') format('svg'),*/
-url('TYPE/greek.otf')}
-@font-face {
 font-family: 'Irmologion ieUcs';
- /* src: url('TYPE/greek.eot');*/
+ /* src: url('type/greek.eot');*/
 src: local('Irmologion ieUcs'),
  /*url('theanodidot-regular-webfont.woff') format('woff'),*/
- url('TYPE/IrmIEUcs.ttf') format('truetype'),
+ url('/type/IrmIEUcs.ttf') format('truetype'),
  /*url('theanodidot-regular-webfont.svg#webfontE40g3tc3') format('svg'),*/
-url('TYPE/irmieucs.otf')}
+url('/type/irmieucs.otf')}
 /****************************************************************************/
 html {
   -ms-text-size-adjust: 100%;
