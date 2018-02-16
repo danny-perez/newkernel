@@ -31,6 +31,21 @@ src: local('Irmologion ieUcs'),
  url('/type/IrmIEUcs.ttf') format('truetype'),
  /*url('theanodidot-regular-webfont.svg#webfontE40g3tc3') format('svg'),*/
 url('/type/irmieucs.otf')}
+@font-face {
+    font-family: 'Triatlhon In';
+    src: local('Triatlhon In'),
+    url('/type/triatlhon-in-normal.ttf') format('truetype'),
+    url('/type/triatlhon-in-normal.ttf')}
+@font-face {
+    font-family: 'Ravenia';
+    src: local('Ravenia'),
+    url('/type/ravenia-normal.ttf') format('truetype'),
+    url('/type/ravenia-normal.ttf')}
+@font-face {
+    font-family: 'Greek Old Face C';
+    src: local('Greek Old Face C'),
+    url('/type/greek-old-face-c.ttf') format('truetype'),
+    url('/type/greek-old-face-c.ttf')}
 /****************************************************************************/
 html {
   -ms-text-size-adjust: 100%;

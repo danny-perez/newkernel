@@ -10,7 +10,7 @@ class Newtestament extends CI_Controller
 {
   public function index()
   {
-    $book = $_REQUEST['book'] ?? '';
+    $book = $_REQUEST['book'] ?? 'byt';
     $chapter = $_REQUEST['chapter'] ?? '1';
     $translate = $_REQUEST['translate'] ?? 'st_text';
     $activeMenu0='';
