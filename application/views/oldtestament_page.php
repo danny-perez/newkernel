@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body">
                 <div class="btn-group btn-group-justified">
                     <a class="btn btn-default" href="#" onclick="left_fu_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;"><<<<</a>
-                    <a class="btn btn-default" id="parallel_verses_old" href="#">ВКЛ/ВЫКЛ</a>
+                    <a class="btn btn-default" id="parallel_verses_old" href="#">ВКЛ/ВЫК</a>
                     <a class="btn btn-default" href="#" onclick="right_fu_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;">>>>></a>
                 </div>
             </div>

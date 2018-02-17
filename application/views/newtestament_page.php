@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body">
                 <div class="btn-group btn-group-justified">
                     <a class="btn btn-default" href="#" onclick="left_fu('/newtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;"><<<<</a>
-                    <a class="btn btn-default" id="parallel_verses" href="#">ВКЛ/ВЫКЛ</a>
+                    <a class="btn btn-default" id="parallel_verses" href="#">ВКЛ/ВЫК</a>
                     <a class="btn btn-default" href="#" onclick="right_fu('/newtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;">>>>></a>
                 </div>
                 </div>
@@ -64,7 +64,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				        if($real_translate=='grek'){echo "<div style='font-family: Greek Old Face C;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</div>";}
                         else if($real_translate=='csya_old'){echo "<div style='font-family: Irmologion ieUcs; font-size: 18px;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</div>";}
                         else {echo "<span style='font-family: Roboto Condensed'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</span>";}
-                        if(strlen($tb['parallel'])>5) echo "<p style='font-family: Lobster; font-size: 12px;' class='parallel_link'>",$tb['parallel'],"</p>";
+                        if(strlen($tb['parallel'])>5){
+                            $par = preg_replace('/[ ]+/',' ',$tb['parallel']);
+                            preg_match_all('/[0-9]?[ ]?[А-Яа-я]+[\.]?[ ]?[0-9]+[:]?[0-9]+/u',$par,$par1);
+                            $final_parallel_link = '';
+                            foreach($par1[0] as $p) $final_parallel_link=$final_parallel_link.", <a href='/golink?val1=$p'>$p</a>";
+                            echo "<p style='font-family: Lobster; font-size: 12px;' class='parallel_link'>",$final_parallel_link,"</p>";
+                        }
 				    }
 				    ?>
 			</div>

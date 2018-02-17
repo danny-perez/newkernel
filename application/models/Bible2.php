@@ -52,5 +52,11 @@
            foreach ($query->result_array() as $row){$per_to_sel=$row['title'];}
            return $per_to_sel;
        }
+       public function parallel_parse($parallel)
+       {
+           preg_match_all('/[0-9]?[ ]?[А-Яа-я]+/u',$parallel,$array_parallel);
+           var_dump($array_parallel);
+           return 8;
+       }
    }
 ?>

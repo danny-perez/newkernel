@@ -46,6 +46,8 @@ if ( ! function_exists('byte_format'))
 															case '/oldtestament':
 																	$breadcrumbString = '<a href="/bible">Библия</a>&ensp;/&ensp;Ветхий Завет';
 																break;
+            default:
+                $breadcrumbString = 'Не определено';
 		}
 		return $breadcrumbString;
 	}
