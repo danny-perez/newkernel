@@ -58,5 +58,21 @@
            var_dump($array_parallel);
            return 8;
        }
+       public function parallel_convert($parallel_link)
+       {
+           $parse = explode('.',$parallel_link);
+           $book_parallel = trim($parse[0]);
+           $chapter_verse = trim($parse[1]);
+           $this->load->database('ekzeget');
+           $query=$this->db->query('SELECT `kn`,`testament` FROM `new_book` WHERE `abreviation_rus` LIKE ?',$book_parallel);
+           $this->db->close();
+           foreach ($query->result_array() as $row){$kn_arr=$row;}
+           $complex_get['kn'] = $kn_arr['kn'];
+           $chap_ver_array = explode(':',$chapter_verse);
+           $complex_get['chapter'] = trim($chap_ver_array[0]);
+           $complex_get['verse'] = trim($chap_ver_array[1]);
+           $complex_get['testament'] = $kn_arr['testament'];
+           return $complex_get;
+       }
    }
 ?>

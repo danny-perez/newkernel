@@ -47,6 +47,9 @@ class Bible extends CI_Controller
                     default:
                         $activeMenu7 = 'active';
     }
+      session_start();
+      $_SESSION['allocation_verse'] = 0;
+      session_write_close();
     $this->load->model('bible2');
     $new_testament=$this->bible2->read_book(1);
     $old_testament=$this->bible2->read_book(0);

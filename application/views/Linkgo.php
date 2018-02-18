@@ -10,6 +10,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="card" style="font-family: PT Sans Caption;">
             <h3 class="card-title" style="color: #007d71;">Призывы к помощи</h3>
             <p align="justify"><?php print_r($indata);?></p>
+            <?php
+                session_start();
+                print_r($_SESSION);
+                session_write_close();
+            ?>
+
         </div>
     </div>
     <!------------------------------->

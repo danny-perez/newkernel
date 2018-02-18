@@ -60,15 +60,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php
                     foreach($text_book as $tb)
 				    {
+				        session_start();
+				        $_SESSION['allocation_verse']>0?$bold=$_SESSION['allocation_verse']:$bold=0;
+				        session_write_close();
 				        if(strlen($tb[$real_translate])<10){echo 'Нет текста с этим переводом'; break;}
-				        if($real_translate=='grek'){echo "<div style='font-family: Greek Old Face C;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</div>";}
-                        else if($real_translate=='csya_old'){echo "<div style='font-family: Irmologion ieUcs; font-size: 18px;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</div>";}
-                        else {echo "<span style='font-family: Roboto Condensed'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</span>";}
+				        if($real_translate=='grek'){if($bold==$tb['st_no'])echo '<b>';echo "<div style='font-family: Greek Old Face C;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</div>";if($bold==$tb['st_no'])echo '</b>';}
+                        else if($real_translate=='csya_old'){if($bold==$tb['st_no'])echo '<b>';echo "<div style='font-family: Irmologion ieUcs; font-size: 18px;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</div>";if($bold==$tb['st_no'])echo '</b>';}
+                        else {if($bold==$tb['st_no'])echo '<b>'; echo "<span style='font-family: Roboto Condensed;'>",'<sup>',$tb['st_no'],'</sup>',$tb[$real_translate],"</span>";if($bold==$tb['st_no'])echo '</b>';}
                         if(strlen($tb['parallel'])>5){
                             $par = preg_replace('/[ ]+/',' ',$tb['parallel']);
                             preg_match_all('/[0-9]?[ ]?[А-Яа-я]+[\.]?[ ]?[0-9]+[:]?[0-9]+/u',$par,$par1);
                             $final_parallel_link = '';
-                            foreach($par1[0] as $p) $final_parallel_link=$final_parallel_link.", <a href='/golink?val1=$p'>$p</a>";
+                            foreach($par1[0] as $p) $final_parallel_link=$final_parallel_link."&ensp;<a href='/golink?val1=$p'>$p</a>";
                             echo "<p style='font-family: Lobster; font-size: 12px;' class='parallel_link'>",$final_parallel_link,"</p>";
                         }
 				    }
