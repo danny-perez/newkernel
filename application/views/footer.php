@@ -75,6 +75,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       $('#parallel_verses').click(function(){
           $('.parallel_link').toggle('slow');
       })
+      $('#parallel_verses_old').click(function(){
+          $('.parallel_link').toggle('slow');
+      })
       function left_fu(link_left,max_chapter){
           var find_str = link_left.indexOf('chapter');
           var r_find_str = link_left.substr(find_str);
