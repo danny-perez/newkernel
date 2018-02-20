@@ -6,52 +6,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!---------------------------------------------------------------->
 <!------><div class="row"><!------------------>
     <!-------------------------------------------->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-title-w-btn">
-                <h3 class="title">Параллельные ссылки</h3>
-            </div>
-            <div class="card-body">
-                <div class="btn-group btn-group-justified">
-                    <a class="btn btn-default" href="#" onclick="left_fu_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;"><<<<</a>
-                    <a class="btn btn-default" id="parallel_verses_old" href="#">ВКЛ/ВЫК</a>
-                    <a class="btn btn-default" href="#" onclick="right_fu_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;">>>>></a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-title-w-btn">
-                <h3 class="title">Выбор главы</h3>
-            </div>
-            <div class="card-body">
-                <select name='chapt' class="form-control" id="selection_old" onchange="load_chapter_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=');">
-                    <option selected disabled>Выберите главу</option>
-                    <?php
-                    for($i=1;$i<=$num_chap;$i++) echo "<option value='$i'>$i</option>";
-                    ?>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-title-w-btn">
-                <h3 class="title">Выбор перевода</h3>
-            </div>
-            <div class="card-body">
-                <select name='transl' class="form-control" id="sel_translate_old" onchange="change_translate_old('/oldtestament?book=<?=$kn;?>&chapter=<?=$chapter;?>&translate=');">
-                    <option selected disabled>Выберите перевод</option>
-                    <?php
-                    foreach($translate as $trans) echo "<option value='",$trans['perevod'],"'>",$trans['select'],"</option>";
-                    ?>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
+        <!--------- Main text ------------->
+    <!-------------------------------------------->
+    <div class="col-md-9">
         <div class="card">
             <div class="card-title-w-btn">
                 <h3 class="title"><?=$title_kn;?>, Глава <?=$chapter;?>, <?=$translate_select;?></h3>
@@ -79,6 +36,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
     </div>
+    <!-------------------------------------------------->
+        <!------------- Right menu ----------------->
+    <!-------------------------------------------------->
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-title-w-btn">
+                <h4 class="title">Параллельные ссылки</h4>
+            </div>
+            <div class="card-body">
+                <div class="btn-group btn-group-justified">
+                    <a class="btn btn-default" href="#" onclick="left_fu_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;"><<<</a>
+                    <a class="btn btn-default" id="parallel_verses_old" href="#">Изм</a>
+                    <a class="btn btn-default" href="#" onclick="right_fu_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=<?=$chapter;?>',<?=$num_chap;?>);false;">>>></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-title-w-btn">
+                <h4 class="title">Выбор главы</h4>
+            </div>
+            <div class="card-body">
+                <select name='chapt' class="form-control" id="selection_old" onchange="load_chapter_old('/oldtestament?book=<?=$kn;?>&translate=<?=$real_translate;?>&chapter=');">
+                    <option selected disabled>Выберите главу</option>
+                    <?php
+                    for($i=1;$i<=$num_chap;$i++) echo "<option value='$i'>$i</option>";
+                    ?>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-title-w-btn">
+                <h4 class="title">Выбор перевода</h4>
+            </div>
+            <div class="card-body">
+                <select name='transl' class="form-control" id="sel_translate_old" onchange="change_translate_old('/oldtestament?book=<?=$kn;?>&chapter=<?=$chapter;?>&translate=');">
+                    <option selected disabled>Выберите перевод</option>
+                    <?php
+                    foreach($translate as $trans) echo "<option value='",$trans['perevod'],"'>",$trans['select'],"</option>";
+                    ?>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <!------------------------------->
     <!------></div><!---------------->
 <!---------------------------------------------------------------->

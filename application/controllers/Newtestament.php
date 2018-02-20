@@ -33,11 +33,12 @@ class Newtestament extends CI_Controller
     $data['num_chap']=$number_chapters;
     $text_book=$this->bible2->text_book($book,$chapter);
     $data['text_book']=$text_book;
-    //$this->bible2->parallel_parse($par);
-
     $data['translate'] = $this->bible2->read_translate();
     $data['real_translate'] = $translate;
     $data['translate_select'] = $this->bible2->perevod_to_select($translate);
+    $load_exegesis = $this->bible2->l_exegesis($book,$chapter);
+    $data['exegesis'] = $load_exegesis;
+
     $dataPage = compact('activeMenu0','activeMenu1','activeMenu2','activeMenu3','activeMenu4','activeMenu5','activeMenu6','activeMenu7');
     $this->load->view('header',$dataPage);
     $this->load->view('newtestament_page',$data);

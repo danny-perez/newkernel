@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: yuriy
@@ -21,7 +20,8 @@ class Exegesis extends CI_Controller
     $activeMenu8='';
     $activeMenu9='';
     $activeMenu10='';
-    $AddresStringUrl = $_SERVER['REQUEST_URI'];
+    $AddresStringUrl = $_REQUEST;
+
     switch ($AddresStringUrl) {
       case '/':
           $activeMenu0 = 'class="active"';
@@ -48,8 +48,18 @@ class Exegesis extends CI_Controller
                         $activeMenu7 = 'active';
     }
     $dataPage = compact('activeMenu0','activeMenu1','activeMenu2','activeMenu3','activeMenu4','activeMenu5','activeMenu6','activeMenu7');
+    $this->load->model('bible2');
+    $book = $_REQUEST['book'];
+    $kn = $this->bible2->kn_to_title($book);
+    $chapter = $_REQUEST['chapter'];
+    $exegesis = $_REQUEST['exegesis'];
+    $read_text = $this->bible2->read_stih_tolk($book,$chapter,$exegesis);
+    $data['kn'] = $kn;
+    $data['chapter'] = $chapter;
+    $data['exegesis'] = $exegesis;
+    $data['read_result'] = $read_text;
     $this->load->view('header',$dataPage);
-    $this->load->view('start_page');
+    $this->load->view('exegesis_page',$data);
     $this->load->view('footer');
   }
 }

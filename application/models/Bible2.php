@@ -74,5 +74,40 @@
            $complex_get['testament'] = $kn_arr['testament'];
            return $complex_get;
        }
+       public function l_exegesis($book,$chapter){
+        $name_tolk = 'tolk_'.$book.$chapter;
+           $this->load->database('tolk');
+           $query=$this->db->query("SELECT DISTINCT(`t_name`) FROM $name_tolk WHERE 1");
+           $this->db->close();
+           foreach ($query->result_array() as $row){$name_exegesis[] = $row['t_name'];}
+           return $name_exegesis;
+       }
+       public function read_stih_tolk($book,$chapter,$exegesis){
+           $name_tolk = 'tolk_'.$book.$chapter;
+           var_dump($name_tolk);
+           $name_stih = 'stih_'.$book.$chapter;
+           $this->load->database('ekzeget');
+           $query=$this->db->query('SELECT `chapter` FROM `new_book` WHERE `kn` LIKE ?',$book);
+           $this->db->close();
+           foreach ($query->result_array() as $row){$lot_chapters=$row['chapter'];}
+           for($i=1;$i<=$lot_chapters;$i++){
+               $this->load->database('stih');
+               $query=$this->db->query("SELECT `st_text` FROM $name_stih WHERE st_no = ?",$i);
+               $this->db->close();
+               foreach ($query->result_array() as $row){$st_text = $row['st_text'];} // Load text
+
+               $this->load->database('tolk');
+               $query=$this->db->query("SELECT `comments` FROM $name_tolk WHERE st_no = ?",$i);
+               $this->db->close();
+               foreach ($query->result_array() as $row){$comments = $row['comments'];}//Load tolk
+
+               $text_result[$i]['stih'] = $st_text;
+               //=====Block analitics==============
+               //$processing = $preg_replace('//n',$comments);
+               //======End block analitics=========
+               $text_result[$i]['tolk'] = $comments;
+           }
+           return $text_result;
+       }
    }
 ?>

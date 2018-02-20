@@ -133,6 +133,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           var new_link = link_left.replace(string1,string2);
           location.href=new_link;
       }
+      function go_exegesis(link_left){
+          var sel_id = $("#sel_exegesis").val();
+          console.log(sel_id);
+          var link_sel = link_left+sel_id;
+          location.href=link_sel;
+      }
     </script>
   </body>
 </html>
